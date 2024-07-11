@@ -3,6 +3,8 @@ name: .NET Core Desktop Build And Release
 on:
   push:
     branches: [ "main" ]
+    tags:
+      - "v*.*.*"
   pull_request:
     branches: [ "main" ]
 
