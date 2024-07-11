@@ -88,24 +88,45 @@ namespace Monitor
         }
         private async Task<bool> fetchMessages()
         {
-            var json_temperature = new NodesList();
-            var json_humidity = new NodesList();
+            var json_temperature_entry = new NodesList();
+            var json_humidity_entry = new NodesList();
+            var json_temperature_exit = new NodesList();
+            var json_humidity_exit = new NodesList();
+            var json_temperature_inner = new NodesList();
+            var json_relay_status = new NodesList();
             var json_water_flow = new NodesList();
             var json_water_level = new NodesList();
 
+
             try
             {
-                using HttpResponseMessage res_temperature = await httpclient.GetAsync("/t");
-                using HttpResponseMessage res_humidity = await httpclient.GetAsync("/h");
+                using HttpResponseMessage res_temperature = await httpclient.GetAsync("/t_en");
+                using HttpResponseMessage res_humidity = await httpclient.GetAsync("/h_en");
+                using HttpResponseMessage res_temperature_exit = await httpclient.GetAsync("/t_ex");
+                using HttpResponseMessage res_humidity_exit = await httpclient.GetAsync("/h_ex");
+                using HttpResponseMessage res_temperature_inner = await httpclient.GetAsync("/t_in");
                 using HttpResponseMessage res_water_flow = await httpclient.GetAsync("/fl");
                 using HttpResponseMessage res_water_level = await httpclient.GetAsync("/wl");
+                using HttpResponseMessage res_relay_status = await httpclient.GetAsync("/rel");
 
-                json_temperature = JsonSerializer.Deserialize<NodesList>(
+                json_temperature_entry = JsonSerializer.Deserialize<NodesList>(
                     await res_temperature.Content.ReadAsStringAsync()
                     );
 
-                json_humidity = JsonSerializer.Deserialize<NodesList>(
+                json_humidity_entry = JsonSerializer.Deserialize<NodesList>(
                     await res_humidity.Content.ReadAsStringAsync()
+                    );
+
+                json_temperature_exit = JsonSerializer.Deserialize<NodesList>(
+                    await res_temperature_exit.Content.ReadAsStringAsync()
+                    );
+                
+                json_humidity_exit = JsonSerializer.Deserialize<NodesList>(
+                    await res_humidity_exit.Content.ReadAsStringAsync()
+                     );
+
+                json_temperature_inner = JsonSerializer.Deserialize<NodesList>(
+                    await res_temperature_inner.Content.ReadAsStringAsync()
                     );
 
                 json_water_flow = JsonSerializer.Deserialize<NodesList>(
@@ -115,6 +136,10 @@ namespace Monitor
                 json_water_level = JsonSerializer.Deserialize<NodesList>(
                     await res_water_level.Content.ReadAsStringAsync()
                     );
+
+                json_relay_status = JsonSerializer.Deserialize<NodesList>(
+                    await res_relay_status.Content.ReadAsStringAsync()
+                );
             }
             catch
             {
@@ -137,9 +162,9 @@ namespace Monitor
             }
 
             // 以温度信息是变化最快的，以它的数量为基准
-            TextBlock_NodeCount.Text = json_temperature.datas.Count.ToString();
+            TextBlock_NodeCount.Text = json_temperature_entry.datas.Count.ToString();
 
-            foreach(var t in json_temperature.datas)
+            foreach(var t in json_temperature_entry.datas)
             {
                 // 根据id新建一个详细信息窗口
                 if (!dwindows.ContainsKey(t["id"] - 1))
@@ -149,12 +174,12 @@ namespace Monitor
                     dwindows[t["id"] - 1].setId(t["id"]);
                 }
 
-                dwindows[t["id"] - 1].addTemperature(t["t"]);
+                dwindows[t["id"] - 1].addTemperature_Entry(t["t"]);
             }
 
-            foreach (var h in json_humidity.datas)
+            foreach (var h in json_humidity_entry.datas)
             {
-                dwindows[h["id"] - 1].addHumidity(h["h"]);
+                dwindows[h["id"] - 1].addHumidity_Entry(h["h"]);
             }
 
             foreach (var fl in json_water_flow.datas)
@@ -165,6 +190,30 @@ namespace Monitor
             foreach (var wl in json_water_level.datas)
             {
                 dwindows[wl["id"] - 1].addWaterLevel(wl["wl"]);
+            }
+            
+
+           // 处理温度出口数据
+            foreach (var t in json_temperature_exit.datas)
+            {
+                dwindows[t["id"] - 1].addTemperature_Exit(t["t"]);
+            }
+
+            // 处理湿度出口数据
+            foreach (var h in json_humidity_exit.datas)
+            {
+                dwindows[h["id"] - 1].addHumidity_Exit(h["h"]);
+            }
+
+            // 处理内部温度数据
+            foreach (var t in json_temperature_inner.datas)
+            {
+                dwindows[t["id"] - 1].addTemperature_Inner(t["t"]);
+            }
+            
+            foreach (var r in json_relay_status.datas)
+            {
+                dwindows[r["id"] - 1].setRelayStatus(r["rid"], r["stat"]);
             }
             return true;
         }

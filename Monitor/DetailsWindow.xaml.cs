@@ -31,9 +31,9 @@ namespace Monitor
             
             //loggers[0].Data.OffsetX = DateTime.Now.ToOADate();
 
-            Plot_Temperature.Plot.Title("Temperature", 18);
+            Plot_Temperature.Plot.Title("Temperature_Entry", 18);
 
-            Plot_Humidity.Plot.Title("Humidity", 18);
+            Plot_Humidity.Plot.Title("Humidity_Entry", 18);
 
             //Plot_KValue.Plot.Title("Water Flow Rate", 25);
 
@@ -65,19 +65,19 @@ namespace Monitor
             TextBlock_Id.Text = id.ToString();
         }
 
-        public void addTemperature(long temperature)
+        public void addTemperature_Entry(long temperature)
         {
             double t = temperature / 10.0;
-            TextBlock_Temperature.Text = t.ToString();
+            TextBlock_Entry_Temperature.Text = t.ToString();
             loggers[0].Add(t);
             Plot_Temperature.Refresh();
             TextBlock_Time.Text = DateTime.Now.ToString("MM/dd HH:mm");
         }
 
-        public void addHumidity(long humidity)
+        public void addHumidity_Entry(long humidity)
         {
             double t = humidity / 10.0;
-            TextBlock_Humidity.Text = t.ToString();
+            TextBlock_Entry_Humidity.Text = t.ToString();
             loggers[1].Add(t);
             Plot_Humidity.Refresh();
         }
@@ -91,5 +91,37 @@ namespace Monitor
         {
             TextBlock_Water_Level.Text = (water_level / 10.0).ToString();
         }
+
+        public void addTemperature_Exit(long temperature)
+        {
+            double t = temperature / 10.0;
+            TextBlock_Exit_Temperature.Text = t.ToString();
+        }
+
+        public void addHumidity_Exit(long humidity)
+        {
+            double t = humidity / 10.0;
+            TextBlock_Exit_Humidity.Text = t.ToString();
+        }
+
+        public void addTemperature_Inner(long temperature)
+        {
+            double t = temperature / 10.0;
+            TextBlock_Inner_Temperature.Text = t.ToString();
+        }
+        public void setRelayStatus(long rid, long status)
+        {
+            // 正常而言,status只能是0和1
+            var status_char = (char)(status + 48);
+            if (TextBlock_Relay.Text[(int)rid] != status_char)
+            {
+                char[] te = TextBlock_Relay.Text.ToCharArray();
+                te[rid] = status_char;
+                TextBlock_Relay.Text = new string(te);
+            }
+            
+        }
+
+
     }
 }

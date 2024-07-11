@@ -15,10 +15,9 @@
         
         <!-- Left -->
         
-        <!-- End Left -->
-        <Grid Grid.Column="0" Margin="5">
+       <Grid Grid.Column="0" Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
@@ -27,16 +26,24 @@
                 <UniformGrid Columns="2">
                     <Label FontSize="12">ID：</Label>
                     <TextBlock x:Name="TextBlock_Id" Margin="0,5,0,0" FontSize="12">0</TextBlock>
-                    <Label FontSize="12">温度(°C)：</Label>
-                    <TextBlock x:Name="TextBlock_Temperature" Margin="0,5,0,0" FontSize="12">0</TextBlock>
-                    <Label FontSize="12">湿度(%)：</Label>
-                    <TextBlock x:Name="TextBlock_Humidity" Margin="0,5,0,0" FontSize="12">0</TextBlock>
+                    <Label FontSize="12">进气口温度(°C)：</Label>
+                    <TextBlock x:Name="TextBlock_Entry_Temperature" Margin="0,5,0,0" FontSize="12">0</TextBlock>
+                    <Label FontSize="12">进气口湿度(%)：</Label>
+                    <TextBlock x:Name="TextBlock_Entry_Humidity" Margin="0,5,0,0" FontSize="12">0</TextBlock>
+                    <Label FontSize="12">出气口温度</Label>
+                    <TextBlock x:Name="TextBlock_Exit_Temperature" Margin="0,5,0,0" FontSize="12">0</TextBlock>
+                    <Label FontSize="12">罐体内温度</Label>
+                    <TextBlock x:Name="TextBlock_Inner_Temperature" Margin="0,5,0,0" FontSize="12">0</TextBlock>
+                    <Label FontSize="12">出气口湿度(%)：</Label>
+                    <TextBlock x:Name="TextBlock_Exit_Humidity" Margin="0,5,0,0" FontSize="12">0</TextBlock>
                     <Label FontSize="12">水位(cm)：</Label>
                     <TextBlock x:Name="TextBlock_Water_Level" Margin="0,5,0,0" FontSize="12">0</TextBlock>
                     <Label FontSize="12">当前时间：</Label>
                     <TextBlock x:Name="TextBlock_Time" Margin="0,5,0,0" FontSize="12">0</TextBlock>
                     <Label FontSize="12">水流量：</Label>
                     <TextBlock x:Name="TextBlock_WaterFlow" Margin="0,5,0,0" FontSize="12">0</TextBlock>
+                    <Label FontSize="12">继电器状态:</Label>
+                    <TextBlock x:Name="TextBlock_Relay" Margin="0,5,0,0" FontSize="12">0000</TextBlock>
                 </UniformGrid>
             </GroupBox>
 
@@ -46,16 +53,13 @@
                 <UniformGrid Columns="2">
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center" Padding="30,3,30,3" Width="94">开始</Button>
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center" Padding="30,3,30,3" Width="94">停止</Button>
-                    <Button VerticalAlignment="Center" HorizontalAlignment="Center" Padding="13,3,13,3" Width="94">连接云平台</Button>
-                    <Button VerticalAlignment="Center" HorizontalAlignment="Center" Padding="30,3,30,3" Width="94">刷新</Button>
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center" Padding="22,3,22,3" Width="94">阈值设置</Button>
                     <Button VerticalAlignment="Center" HorizontalAlignment="Center" Padding="22,3,22,3" Width="94">数据导出</Button>
-                    
-                    
                 </UniformGrid>
             </GroupBox>
         </Grid>
-        
+        <!-- End Left -->
+
         <!-- Right -->
         <Grid Grid.Column="1" Margin="5">
             <Grid.RowDefinitions>
