@@ -174,7 +174,7 @@ namespace Monitor
             switch(level)
             {
                 case 0:
-                    MessageBox.Show(message,"信息");
+                    MessageBox.Show(message,"信息", MessageBoxButton.OK,MessageBoxImage.Information);
                     break;
                 case 1:
                     MessageBox.Show(message, "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
