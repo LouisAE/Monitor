@@ -35,7 +35,7 @@ jobs:
         
     - name: Pack
       if: startsWith(github.ref, 'refs/tags/')
-      run: Compress-Archive -Path ./Monitor/bin/Release/* -Destination Release.zip
+      run: Compress-Archive -Path ./Monitor/bin/Release/net8.0-windows/publish/* -Destination Release.zip
       
     - name: Release
       uses: softprops/action-gh-release@v2
