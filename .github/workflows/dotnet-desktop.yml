@@ -31,18 +31,18 @@ jobs:
     - name: Build
       run: |
         dotnet build
-        dotnet publish
+        dotnet publish -r win-x64 --sc -f net8.0-windows
         
     - name: Pack
       if: startsWith(github.ref, 'refs/tags/')
-      run: Compress-Archive -Path ./Monitor/bin/Release/net8.0-windows/publish/* -Destination Release.zip
+      run: Compress-Archive -Path ./Monitor/bin/Release/net8.0-windows/win-x64/* -Destination Release.zip
       
     - name: Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
         body: |
-        ## 此为自动编译并发布的可执行文件
+          ## 此为自动编译并发布的可执行文件
         name: "Release"
         make_latest: true
         files: Release.zip
