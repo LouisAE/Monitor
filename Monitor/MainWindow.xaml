@@ -1,0 +1,48 @@
+﻿<Window x:Class="Monitor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Monitor"
+        mc:Ignorable="d"
+        Title="监控客户端" Height="180" Width="400" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Row 0 -->
+        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">API地址</Label>
+        <TextBox x:Name="TextBox_Api" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" Margin="3,0,3,0"/>
+        <Button x:Name="Button_Connect" Click="On_Button_Connect_Clicked" Grid.Row="0" Grid.Column="2" Margin="3,0,3,0">连接</Button>
+        <!-- End Row 0 -->
+        
+        <GridSplitter Height="10" Grid.Row="1"/>
+        
+        <!-- Row 1 -->
+        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">编号</Label>
+        <ComboBox x:Name="ComboBox_Id" Grid.Row="2" Grid.Column="1" Margin="3,0,3,0" IsEnabled="False"></ComboBox>
+        <Button x:Name="Button_Details" Click="On_Button_Details_Clicked" Grid.Row="2" Grid.Column="2" Margin="3,0,3,0" IsEnabled="False">详细数据...</Button>
+        <!-- End Row 1 -->
+
+        <GridSplitter Height="10" Grid.Row="3"/>
+        
+        <!-- Row 2 -->
+        <UniformGrid Grid.Row="4" Grid.Column="1">
+            <Label>节点总数：</Label>
+            <TextBlock x:Name="TextBlock_NodeCount" Margin="0,5,0,0">未知</TextBlock>
+            <Label>连接状态：</Label>
+            <TextBlock x:Name="TextBlock_ConnectStatus" Margin="0,5,0,0">未连接</TextBlock>
+        </UniformGrid>
+        <!-- End Row 2 -->
+    </Grid>
+
+</Window>
